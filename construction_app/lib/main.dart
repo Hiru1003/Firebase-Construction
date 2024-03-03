@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sealtech/Employee/navbarE.dart';
 import 'package:sealtech/client/navbar.dart';
 import 'package:sealtech/components/theme.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       //     }
       //   },
       // ),
-      home: NavbarC(),
+      home: NavbarE(),
     );
   }
 }

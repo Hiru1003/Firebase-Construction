@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1001017541681",
+    "firebase_url": "https://sealtech-c82d0-default-rtdb.firebaseio.com",
+    "project_id": "sealtech-c82d0",
+    "storage_bucket": "sealtech-c82d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001017541681:android:3abf139c631249d1724110",
+        "android_client_info": {
+          "package_name": "com.example.sealtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB69MmqogKiMcy9rtmC21H0TXv46xSQ_-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
