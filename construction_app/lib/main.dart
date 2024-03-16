@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sealtech/Employee/navbarE.dart';
 import 'package:sealtech/client/navbar.dart';
 import 'package:sealtech/components/theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +39,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
 
 // Future<String> getData() async {
 //   await Future.delayed(Duration(seconds: 2));
