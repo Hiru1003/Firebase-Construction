@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sealtech/components/button.dart';
 import 'package:sealtech/components/theme.dart';
 
-class Appoinment_Page extends StatefulWidget {
-  const Appoinment_Page({
-    Key? key,
-  }) : super(key: key);
+class AppointmentPage extends StatefulWidget {
+  const AppointmentPage({Key? key}) : super(key: key);
 
   @override
-  State<Appoinment_Page> createState() => _Appoinment_PageState();
+  _AppointmentPageState createState() => _AppointmentPageState();
 }
 
-class _Appoinment_PageState extends State<Appoinment_Page> {
+class _AppointmentPageState extends State<AppointmentPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController appointmentWithController =
       TextEditingController();
@@ -28,23 +26,28 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
           title: const Text(
             'Missing Information',
             style: TextStyle(
-                color: Color.fromARGB(255, 94, 95, 94),
-                fontSize: 20), // Change title color and font size
+              color: Color.fromARGB(255, 94, 95, 94),
+              fontSize: 20,
+            ),
           ),
           content: const Text(
             'Please fill out all fields before continuing.',
-            style:
-                TextStyle(color: Color.fromARGB(255, 94, 95, 94), fontSize: 14),
+            style: TextStyle(
+              color: Color.fromARGB(255, 94, 95, 94),
+              fontSize: 14,
+            ),
           ),
           backgroundColor: secondary50,
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the validation dialog
+                Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(
                 'OK',
-                style: TextStyle(color: Color.fromARGB(255, 68, 68, 68)),
+                style: TextStyle(
+                  color: Color.fromARGB(255, 68, 68, 68),
+                ),
               ),
             ),
           ],
@@ -53,8 +56,7 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
     );
   }
 
-  void _showSuccessDialog(BuildContext context) {
-    // Validation check before showing the success dialog
+  void _showSuccessDialog(BuildContext context) async {
     String name = nameController.text;
     String appointmentWith = appointmentWithController.text;
     String date = dateController.text;
@@ -66,10 +68,8 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
         date.isEmpty ||
         time.isEmpty ||
         duration.isEmpty) {
-      // Show validation error dialog
       _showValidationDialog(context);
     } else {
-      // All fields are filled, show success dialog
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -77,12 +77,16 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
             title: const Text(
               'Success',
               style: TextStyle(
-                  color: Color.fromARGB(255, 94, 95, 94), fontSize: 22),
+                color: Color.fromARGB(255, 94, 95, 94),
+                fontSize: 22,
+              ),
             ),
             content: const Text(
-              'Appoinment added successfully!',
+              'Appointment added successfully!',
               style: TextStyle(
-                  color: Color.fromARGB(255, 94, 95, 94), fontSize: 14),
+                color: Color.fromARGB(255, 94, 95, 94),
+                fontSize: 14,
+              ),
             ),
             backgroundColor: secondary25,
             actions: [
@@ -93,13 +97,24 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
                 },
                 child: const Text(
                   'Back to Home',
-                  style: TextStyle(color: Color.fromARGB(255, 68, 68, 68)),
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 68, 68, 68),
+                  ),
                 ),
               ),
             ],
           );
         },
       );
+
+      // Update data in Firebase Realtime Database
+      await FirebaseFirestore.instance.collection('appointments').add({
+        'name': name,
+        'appointmentWith': appointmentWith,
+        'date': date,
+        'time': time,
+        'duration': duration,
+      });
     }
   }
 
@@ -107,18 +122,17 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(
                 'Appointment',
-                style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.displayLarge,
-                  color: const Color.fromARGB(255, 70, 66, 68),
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(255, 70, 66, 68),
                 ),
               ),
             ],
@@ -181,7 +195,7 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
                 child: TextField(
                   controller: appointmentWithController,
                   decoration: InputDecoration(
-                    labelText: 'Who do you want to make an appointment with?',
+                    labelText: 'Who do you want to make an \nappointment with',
                     labelStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -255,18 +269,6 @@ class _Appoinment_PageState extends State<Appoinment_Page> {
                 child: Button(
                   buttonText: 'Submit',
                   onPressed: () {
-                    // Access the user input using the controllers
-                    String name = nameController.text;
-                    String appointmentWith = appointmentWithController.text;
-                    String date = dateController.text;
-                    String time = timeController.text;
-                    String duration = durationController.text;
-
-                    // Do something with the user input
-                    print(
-                        'Name: $name, Appointment with: $appointmentWith, Date: $date, Time: $time, Duration: $duration');
-
-                    // Show success dialog
                     _showSuccessDialog(context);
                   },
                   color: 'orange',
