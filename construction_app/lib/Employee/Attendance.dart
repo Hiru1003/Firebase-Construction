@@ -1,19 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sealtech/components/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Employee {
-  final int id;
   final String name;
   bool isPresent;
   DateTime? attendanceTime;
 
-  Employee(
-      {required this.id,
-      required this.name,
-      this.isPresent = false,
-      this.attendanceTime});
+  Employee({
+    required this.name,
+    this.isPresent = false,
+    this.attendanceTime,
+  });
 }
 
 class AttendancePage extends StatefulWidget {
@@ -30,19 +29,8 @@ class _AttendancePageState extends State<AttendancePage> {
   @override
   void initState() {
     super.initState();
-    // Initialize employees from the database (you can replace this with actual database calls)
-    employees = [
-      Employee(id: 1, name: 'Kamal Perera'),
-      Employee(id: 2, name: 'Sanidu Fernando'),
-      Employee(id: 3, name: 'Gehan Peiris'),
-      Employee(id: 4, name: 'Dulish Mendis'),
-      Employee(id: 5, name: 'Shane Salgado'),
-      Employee(id: 6, name: 'Jihan Perera'),
-      Employee(id: 7, name: 'Maleesha Fonseka'),
-      Employee(id: 8, name: 'Vehan Mendis'),
-      // Add more employees as needed
-    ];
-
+    // Initialize employees from the database
+    _fetchEmployees();
     // Set up a timer to update the time every second
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -58,6 +46,24 @@ class _AttendancePageState extends State<AttendancePage> {
     super.dispose();
   }
 
+  Future<void> _fetchEmployees() async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('employees').get();
+    final List<Employee> fetchedEmployees = snapshot.docs
+        .map((doc) => Employee(
+              name: doc['name'] as String,
+              isPresent: doc['isPresent'] as bool,
+              attendanceTime: (doc['attendanceTime'] as Timestamp?)?.toDate(),
+            ))
+        .toList();
+
+    setState(() {
+      employees = fetchedEmployees;
+      presentEmployees =
+          fetchedEmployees.where((emp) => emp.isPresent).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,10 +77,10 @@ class _AttendancePageState extends State<AttendancePage> {
               Text(
                 'Attendance',
                 style: GoogleFonts.poppins(
-                    textStyle: Theme.of(context).textTheme.displayLarge,
-                    color: const Color.fromARGB(255, 70, 66, 68),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
+                  textStyle: Theme.of(context).textTheme.headline6!,
+                  color: const Color.fromARGB(255, 70, 66, 68),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -84,8 +90,9 @@ class _AttendancePageState extends State<AttendancePage> {
         toolbarOpacity: 0.9,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(18),
-              bottomLeft: Radius.circular(18)),
+            bottomRight: Radius.circular(18),
+            bottomLeft: Radius.circular(18),
+          ),
         ),
         iconTheme: const IconThemeData(
           color: Colors.black,
@@ -138,16 +145,34 @@ class _AttendancePageState extends State<AttendancePage> {
   }
 
   void _toggleAttendance(Employee employee) {
+    final employeeIndex = employees.indexOf(employee);
+    final updatedEmployee = Employee(
+      name: employee.name,
+      isPresent: !employee.isPresent,
+      attendanceTime: _currentTime,
+    );
+
     setState(() {
-      employee.isPresent = !employee.isPresent;
-      employee.attendanceTime = _currentTime;
+      employees[employeeIndex] = updatedEmployee;
+      if (updatedEmployee.isPresent) {
+        presentEmployees.add(updatedEmployee);
+      } else {
+        presentEmployees.remove(updatedEmployee);
+      }
     });
 
-    if (employee.isPresent) {
-      presentEmployees.add(employee);
-    } else {
-      presentEmployees.remove(employee);
-    }
+    _updateEmployeeInFirestore(updatedEmployee);
+  }
+
+  Future<void> _updateEmployeeInFirestore(Employee employee) async {
+    final DocumentReference<Map<String, dynamic>> employeeRef =
+        FirebaseFirestore.instance.collection('employees').doc(employee.name);
+
+    await employeeRef.set({
+      'name': employee.name,
+      'isPresent': employee.isPresent,
+      'attendanceTime': employee.attendanceTime,
+    });
   }
 
   void _viewAttendanceRecords() {
@@ -174,7 +199,7 @@ class _AttendancePageState extends State<AttendancePage> {
               },
             ),
           ),
-          backgroundColor: secondary25,
+          backgroundColor: Colors.white,
           actions: [
             TextButton(
               onPressed: () {
@@ -222,7 +247,7 @@ class _AttendancePageState extends State<AttendancePage> {
                 color: Color.fromARGB(255, 94, 95, 94),
                 fontSize: 14), // Change input text color
           ),
-          backgroundColor: secondary25,
+          backgroundColor: Colors.white,
           actions: [
             TextButton(
               onPressed: () {
@@ -250,14 +275,24 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
-  void _submitEmployee(String name) {
+  void _submitEmployee(String name) async {
+    final CollectionReference<Map<String, dynamic>> employeesRef =
+        FirebaseFirestore.instance.collection('employees');
+
+    await employeesRef.add({
+      'name': name,
+      'isPresent': false,
+      'attendanceTime': null,
+    });
+
+    final newEmployee = Employee(
+      name: name,
+      isPresent: false,
+      attendanceTime: null,
+    );
+
     setState(() {
-      int newId = employees.length + 1;
-      Employee newEmployee = Employee(id: newId, name: name);
       employees.add(newEmployee);
-      if (newEmployee.isPresent) {
-        presentEmployees.add(newEmployee);
-      }
     });
     Navigator.of(context).pop(); // Close the add employee dialog
   }
