@@ -26,18 +26,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder(
-        initialData: null,
-        future: getData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoadingPage1();
-          } else {
-            return LoadingPage2();
-          }
-        },
-      ),
-      //home: NavbarE(),
+      //
+      home: NavbarE(),
     );
   }
 }
