@@ -4,6 +4,7 @@ import 'package:sealtech/Employee/Noitification.dart';
 import 'package:sealtech/Employee/deleteacc.dart';
 import 'package:sealtech/components/button.dart';
 import 'package:sealtech/components/theme.dart';
+import 'package:sealtech/privacypolicy.dart';
 import 'package:sealtech/signin.dart';
 
 class Profile_Page extends StatefulWidget {
@@ -117,11 +118,11 @@ class _Profile_PageState extends State<Profile_Page> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      // Navigate to the Privacy and Security page
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => PrivacyPage()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PrivacyPolicyPage()),
+                      );
                     },
                     child: Container(
                       width: 310,
