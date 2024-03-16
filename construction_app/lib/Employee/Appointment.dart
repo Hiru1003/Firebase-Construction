@@ -195,7 +195,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 child: TextField(
                   controller: appointmentWithController,
                   decoration: InputDecoration(
-                    labelText: 'Who do you want to make an \nappointment with',
+                    labelText: 'Who do you want to make an appointment with',
                     labelStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
