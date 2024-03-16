@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sealtech/components/button.dart';
 import 'package:sealtech/components/theme.dart';
 
@@ -26,13 +28,16 @@ class _NewLocation_PageState extends State<NewLocation_Page> {
           title: const Text(
             'Missing Information',
             style: TextStyle(
-                color: Color.fromARGB(255, 94, 95, 94),
-                fontSize: 20), // Change title color
+              color: Color.fromARGB(255, 94, 95, 94),
+              fontSize: 20,
+            ),
           ),
           content: const Text(
             'Please fill out all fields before continuing.',
-            style:
-                TextStyle(color: Color.fromARGB(255, 94, 95, 94), fontSize: 14),
+            style: TextStyle(
+              color: Color.fromARGB(255, 94, 95, 94),
+              fontSize: 14,
+            ),
           ),
           backgroundColor: secondary50,
           actions: [
@@ -51,7 +56,7 @@ class _NewLocation_PageState extends State<NewLocation_Page> {
     );
   }
 
-  void _showSuccessDialog(BuildContext context) {
+  void _showSuccessDialog(BuildContext context) async {
     // Validation check before showing the success dialog
     String title = titleController.text;
     String deadline = deadlineController.text;
@@ -73,12 +78,16 @@ class _NewLocation_PageState extends State<NewLocation_Page> {
             title: const Text(
               'Success',
               style: TextStyle(
-                  color: Color.fromARGB(255, 94, 95, 94), fontSize: 22),
+                color: Color.fromARGB(255, 94, 95, 94),
+                fontSize: 22,
+              ),
             ),
             content: const Text(
               'Location added successfully!',
               style: TextStyle(
-                  color: Color.fromARGB(255, 94, 95, 94), fontSize: 14),
+                color: Color.fromARGB(255, 94, 95, 94),
+                fontSize: 14,
+              ),
             ),
             backgroundColor: secondary25,
             actions: [
@@ -96,6 +105,14 @@ class _NewLocation_PageState extends State<NewLocation_Page> {
           );
         },
       );
+
+      // Update data in Firebase
+      await FirebaseFirestore.instance.collection('locations').add({
+        'title': title,
+        'deadline': deadline,
+        'location': location,
+        'duePayment': duePayment,
+      });
     }
   }
 
@@ -231,17 +248,7 @@ class _NewLocation_PageState extends State<NewLocation_Page> {
                 child: Button(
                   buttonText: 'Submit',
                   onPressed: () {
-                    // Access the user input using the controllers
-                    String title = titleController.text;
-                    String deadline = deadlineController.text;
-                    String location = locationController.text;
-                    String duePayment = duePaymentController.text;
-
                     _showSuccessDialog(context);
-
-                    // Do something with the user input
-                    print(
-                        'Title: $title, Deadline: $deadline, Location: $location, Due Payment: $duePayment');
                   },
                   color: 'orange',
                   enableIcon: false,
