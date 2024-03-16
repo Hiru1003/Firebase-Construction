@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sealtech/client/home.dart';
 import 'package:sealtech/components/button.dart';
 import 'package:sealtech/components/theme.dart';
+import 'package:sealtech/signin.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -13,6 +17,38 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  Future<void> _signUp() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+
+        // Save user data to Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'name': _nameController.text,
+          'email': _emailController.text,
+          // Add other user data fields if needed
+        });
+
+        // Navigate to the home page after successful sign-up
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      } catch (e) {
+        // If sign up fails, display an error message to the user
+        print('Failed to sign up: $e');
+        // You can display an error message to the user here
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,58 +60,61 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                //logo
-              Padding(
-                padding: const EdgeInsets.only(top: 65),
-                child: Image.asset('lib/images/logo-no-background.png', width: 60,),
-              ),
-              const SizedBox(height: 60),
+                // Logo
+                Padding(
+                  padding: const EdgeInsets.only(top: 65),
+                  child: Image.asset(
+                    'lib/images/logo-no-background.png',
+                    width: 60,
+                  ),
+                ),
+                const SizedBox(height: 60),
 
-              //sign up text
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Create an Account, Let’s Get Started!',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'inter',
+                // Sign up text
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Create an Account, Let’s Get Started!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'inter',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              //name field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  controller: _nameController,
-                  cursorColor: accentColor,
-                  decoration: InputDecoration(
-                    labelText: '   Name',
-                    labelStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
+                // Name field
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: TextFormField(
+                    controller: _nameController,
+                    cursorColor: accentColor,
+                    decoration: InputDecoration(
+                      labelText: '   Name',
+                      labelStyle: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                      border: const UnderlineInputBorder(),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: accentColor),
+                      ),
                     ),
-                    border: const UnderlineInputBorder(),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: accentColor),
-                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-                //email and password fields
+                // Email and password fields
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -93,14 +132,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value)) {
-                            return 'Please enter a valid email address';
-                          }
-                          return null;
-                        
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
                     },
                   ),
                 ),
@@ -123,95 +163,86 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                            return 'Password must have at least 8 characters\nwith numbers, special characters, and letters';
-                          }
-                          return null;
-                        },
-                  ),
-                ),
-
-                //forgot password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (!RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                          .hasMatch(value)) {
+                        return 'Password must have at least 8 characters\nwith numbers, special characters, and letters';
+                      }
+                      return null;
                     },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 110, 110, 110),
-                        fontSize: 13,
-                      ),
-                    ),
                   ),
                 ),
-              ),
-              
-              const SizedBox(height:20),
 
-              //sign in button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Button(
-                  buttonText: 'Sign Up',
-                  onPressed: () {
-      if (_formKey.currentState!.validate()) {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => SignInPage()),
-        // );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-              content: Text('Please Wait...'),
-              backgroundColor: accentColor,
-            ));
-        //backend code here
-      }
-    },
-                  color: 'orange',
-                  enableIcon: false,
-                  isStroked: false,
-                ),
-              ),
-
-              //new to sealtech
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 13,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        
-                      },
+                // Forgot password
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
                       child: const Text(
-                        'Sign In',
+                        'Forgot Password?',
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
+                          color: Color.fromARGB(255, 110, 110, 110),
+                          fontSize: 13,
                         ),
                       ),
                     ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Sign up button
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Button(
+                    buttonText: 'Sign Up',
+                    onPressed: _signUp,
+                    color: 'orange',
+                    enableIcon: false,
+                    isStroked: false,
+                  ),
+                ),
+
+                // New to sealtech
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Already have an account?',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignInPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-              ),
-            ],
           ),
         ),
-      ),
       ),
     );
   }
