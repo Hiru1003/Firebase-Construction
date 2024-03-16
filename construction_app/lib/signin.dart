@@ -30,15 +30,12 @@ class _SignInPageState extends State<SignInPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        // If sign in is successful, navigate to the home screen
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Home()),
         );
       } catch (e) {
-        // If sign in fails, display an error message to the user
         print('Failed to sign in: $e');
-        // You can display an error message to the user here
       }
     }
   }

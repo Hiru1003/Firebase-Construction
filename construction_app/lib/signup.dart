@@ -33,18 +33,14 @@ class _SignUpPageState extends State<SignUpPage> {
             .set({
           'name': _nameController.text,
           'email': _emailController.text,
-          // Add other user data fields if needed
         });
 
-        // Navigate to the home page after successful sign-up
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Home()),
         );
       } catch (e) {
-        // If sign up fails, display an error message to the user
         print('Failed to sign up: $e');
-        // You can display an error message to the user here
       }
     }
   }
