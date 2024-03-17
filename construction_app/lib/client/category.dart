@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sealtech/client/chat.dart';
 import 'package:sealtech/client/chemicals.dart';
-import 'package:sealtech/client/product.dart';
 import 'package:sealtech/client/services.dart';
 import 'package:sealtech/client/tools.dart';
 import 'package:sealtech/components/button.dart';
@@ -28,11 +28,15 @@ class Category extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 16,),
+                const SizedBox(
+                  height: 16,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 18,),
+                    SizedBox(
+                      width: 18,
+                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -76,14 +80,17 @@ class Category extends StatelessWidget {
                                       onPressed: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => Chat()),
+                                          MaterialPageRoute(
+                                              builder: (context) => Chat()),
                                         );
                                       },
                                       width: 150,
                                       isStroked: true,
                                       color: 'white',
                                     ),
-                                    const SizedBox(height: 16,),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -133,7 +140,8 @@ class Category extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Chemical()),
+                              MaterialPageRoute(
+                                  builder: (context) => Chemical()),
                             );
                           },
                           child: Stack(
@@ -165,63 +173,261 @@ class Category extends StatelessWidget {
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
-                  child: Text('Service', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+                  child: Text('Service',
+                      style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor)),
                 ),
-                const SizedBox(height: 5,),
-                const SingleChildScrollView(
+                const SizedBox(
+                  height: 5,
+                ),
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 6),
-                  child: Row(
-                    children: [
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ],
-                  ),
+                  child: ServicesList(),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
-                  child: Text('Tools', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+                  child: Text('Tools',
+                      style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor)),
                 ),
-                const SizedBox(height: 5,),
-                const SingleChildScrollView(
+                SizedBox(height: 5),
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 6),
-                  child: Row(
-                    children: [
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ],
-                  ),
+                  child: ToolsList(),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
-                  child: Text('Chemicals', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+                  child: Text('Chemicals',
+                      style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor)),
                 ),
-                const SizedBox(height: 5,),
-                const SingleChildScrollView(
+                SizedBox(height: 5),
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 6),
-                  child: Row(
-                    children: [
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                      ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ],
-                  ),
+                  child: ChemicalsList(),
                 ),
               ],
             ),
           ),
         ),
       );
+}
+
+class ServicesList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('services').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        return Row(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            final data = document.data() as Map<String, dynamic>;
+            final title =
+                data['name'] ?? ''; // Retrieve title from 'name' field
+            final price = data['price'] ?? ''; // Null check for price field
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    'lib/images/pro1.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  SizedBox(height: 10), // Add vertical space
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    'Service',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
+
+class ToolsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('tools').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        return Row(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            final data = document.data() as Map<String, dynamic>;
+            final title =
+                data['name'] ?? ''; // Retrieve title from 'name' field
+            final price = data['price'] ?? ''; // Null check for price field
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    'lib/images/pro1.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  SizedBox(height: 10), // Add vertical space
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    'Tool',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
+
+class ChemicalsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('chemicals').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        return Row(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            final data = document.data() as Map<String, dynamic>;
+            final title =
+                data['name'] ?? ''; // Retrieve title from 'name' field
+            final price = data['price'] ?? ''; // Null check for price field
+            return ProductPage(
+              imagePath: 'lib/images/pro1.png',
+              title: title,
+              subtitle: 'Chemical',
+              price: price,
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
+
+class ProductPage extends StatelessWidget {
+  final String imagePath;
+  final String title;
+  final String subtitle;
+  final String price;
+
+  const ProductPage({
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Handle onTap
+      },
+      child: Container(
+        width: 180,
+        child: Column(
+          children: [
+            Image.asset(
+              imagePath,
+              height: 130,
+              width: 180,
+              fit: BoxFit.cover,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(subtitle),
+                  Text(price),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
