@@ -15,56 +15,73 @@ class ToolsList extends StatelessWidget {
           return const CircularProgressIndicator();
         }
 
-        return Row(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            final data = document.data() as Map<String, dynamic>;
-            final title =
-                data['name'] ?? ''; // Retrieve title from 'name' field
-            final price = data['price'] ?? '';
-            final imageUrl = data['imageUrl'] ?? '';
-            // Null check for price field
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 9.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
+
+        return Column(
+          children: [
+            for (int i = 0; i < documents.length; i += 2)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.network(
-                    imageUrl,
-                    height: 100,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.error);
-                    },
+                  Expanded(
+                    child: _buildToolContainer(documents[i]),
                   ),
-                  const SizedBox(height: 10), // Add vertical space
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                  if (i + 1 < documents.length)
+                    Expanded(
+                      child: _buildToolContainer(documents[i + 1]),
                     ),
-                  ),
-                  const Text(
-                    'Tool',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                 ],
               ),
-            );
-          }).toList(),
+          ],
         );
       },
+    );
+  }
+
+  Widget _buildToolContainer(QueryDocumentSnapshot document) {
+    final Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    final title = data['name'] ?? ''; // Retrieve title from 'name' field
+    final price = data['price'] ?? '';
+    final imageUrl = data['imageUrl'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            imageUrl,
+            height: 100,
+            width: 100,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(Icons.error);
+            },
+          ),
+          const SizedBox(height: 10), // Add vertical space
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Text(
+            'Tool',
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey,
+            ),
+          ),
+          Text(
+            price,
+            style: const TextStyle(
+              fontSize: 13,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }
@@ -91,25 +108,7 @@ class Tool extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ToolsList(),
-                    ToolsList(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ToolsList(),
-                    ToolsList(),
-                  ],
-                ),
-              ],
-            ),
+            child: ToolsList(),
           ),
         ),
       ),
