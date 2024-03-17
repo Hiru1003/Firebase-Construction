@@ -55,7 +55,7 @@ class ServicesList extends StatelessWidget {
     final imageUrl = data['imageUrl'] ?? '';
 
     return Padding(
-      padding: const EdgeInsets.only(left: 30),
+      padding: const EdgeInsets.only(left: 30, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
