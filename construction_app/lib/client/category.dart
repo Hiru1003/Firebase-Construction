@@ -34,14 +34,15 @@ class Category extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 18,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Service()),
+                          MaterialPageRoute(
+                              builder: (context) => ServicesList()),
                         );
                       },
                       child: Column(
@@ -184,10 +185,10 @@ class Category extends StatelessWidget {
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: ServicesList(),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Text('Tools',
@@ -196,13 +197,13 @@ class Category extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: primaryColor)),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: ToolsList(),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Text('Chemicals',
@@ -211,10 +212,10 @@ class Category extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: primaryColor)),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: ChemicalsList(),
                 ),
               ],
@@ -235,7 +236,7 @@ class ServicesList extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         return Row(
@@ -244,20 +245,24 @@ class ServicesList extends StatelessWidget {
             final title =
                 data['name'] ?? ''; // Retrieve title from 'name' field
             final price = data['price'] ?? ''; // Null check for price field
+            final imageUrl = data['imageUrl'] ?? '';
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 9.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(
-                    'lib/images/pro1.png',
+                  Image.network(
+                    imageUrl,
                     height: 100,
                     width: 100,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.error);
+                    },
                   ),
-                  SizedBox(height: 10), // Add vertical space
+                  const SizedBox(height: 10), // Add vertical space
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -271,12 +276,12 @@ class ServicesList extends StatelessWidget {
                   ),
                   Text(
                     price,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             );
@@ -298,7 +303,7 @@ class ToolsList extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         return Row(
@@ -306,21 +311,26 @@ class ToolsList extends StatelessWidget {
             final data = document.data() as Map<String, dynamic>;
             final title =
                 data['name'] ?? ''; // Retrieve title from 'name' field
-            final price = data['price'] ?? ''; // Null check for price field
+            final price = data['price'] ?? '';
+            final imageUrl = data['imageUrl'] ?? '';
+            // Null check for price field
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 9.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(
-                    'lib/images/pro1.png',
+                  Image.network(
+                    imageUrl,
                     height: 100,
                     width: 100,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.error);
+                    },
                   ),
-                  SizedBox(height: 10), // Add vertical space
+                  const SizedBox(height: 10), // Add vertical space
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -334,12 +344,12 @@ class ToolsList extends StatelessWidget {
                   ),
                   Text(
                     price,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             );
@@ -370,11 +380,46 @@ class ChemicalsList extends StatelessWidget {
             final title =
                 data['name'] ?? ''; // Retrieve title from 'name' field
             final price = data['price'] ?? ''; // Null check for price field
-            return ProductPage(
-              imagePath: 'lib/images/pro1.png',
-              title: title,
-              subtitle: 'Chemical',
-              price: price,
+            final imageUrl = data['imageUrl'] ??
+                ''; // Retrieve image URL from 'imageUrl' field
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 9.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(
+                    imageUrl,
+                    height: 100,
+                    width: 100,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.error);
+                    },
+                  ),
+                  const SizedBox(height: 10), // Add vertical space
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    'Chemical',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             );
           }).toList(),
         );
