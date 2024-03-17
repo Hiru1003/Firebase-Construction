@@ -10,7 +10,8 @@ class Cart extends StatefulWidget {
   CartState createState() => CartState(); // Made the class public
 }
 
-class CartState extends State<Cart> { // Made the class public
+class CartState extends State<Cart> {
+  // Made the class public
   double subtotal = 0;
 
   void updateSubtotal(double price) {
@@ -42,23 +43,28 @@ class CartState extends State<Cart> { // Made the class public
               productName: 'Swimming Pool (8ft)',
               productDescription: 'Service',
               productPrice: 2000000.0,
-              onQuantityChanged: (quantity) => updateSubtotal(2000000.0 * quantity),
+              onQuantityChanged: (quantity) =>
+                  updateSubtotal(2000000.0 * quantity),
             ),
             CartItem(
               imageAsset: 'lib/images/pro1.png',
               productName: 'Garden Landscaping',
               productDescription: 'Service',
               productPrice: 1500000.0,
-              onQuantityChanged: (quantity) => updateSubtotal(1500000.0 * quantity),
+              onQuantityChanged: (quantity) =>
+                  updateSubtotal(1500000.0 * quantity),
             ),
             CartItem(
               imageAsset: 'lib/images/pro1.png',
               productName: 'Home Renovation',
               productDescription: 'Service',
               productPrice: 3000000.0,
-              onQuantityChanged: (quantity) => updateSubtotal(3000000.0 * quantity),
+              onQuantityChanged: (quantity) =>
+                  updateSubtotal(3000000.0 * quantity),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Expanded(
@@ -136,7 +142,8 @@ class CartState extends State<Cart> { // Made the class public
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: Text('0 LKR', style: TextStyle(color: Colors.grey[600])),
+                      child: Text('0 LKR',
+                          style: TextStyle(color: Colors.grey[600])),
                     ),
                   ),
                 ),
@@ -167,14 +174,24 @@ class CartState extends State<Cart> { // Made the class public
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: Text('5009999 LKR', style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 18)),
+                      child: Text('5009999 LKR',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: primaryColor,
+                              fontSize: 18)),
                     ),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 24),
-            Button(buttonText: 'Proceed to Checkout', onPressed: (){}, color: 'orange', enableIcon: true, width: 380,)
+            Button(
+              buttonText: 'Proceed to Checkout',
+              onPressed: () {},
+              color: 'orange',
+              enableIcon: true,
+              width: 380,
+            )
           ],
         ),
       ),
