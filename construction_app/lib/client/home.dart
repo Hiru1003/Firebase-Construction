@@ -14,7 +14,10 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 100,
           title: Center(
-            child: Image.asset('lib/images/logo-word-no-background.png', width: 160,),
+            child: Image.asset(
+              'lib/images/logo-word-no-background.png',
+              width: 160,
+            ),
           ),
           backgroundColor: primary75,
         ),
@@ -27,7 +30,9 @@ class Home extends StatelessWidget {
                 height: 180,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/images/home_client.png',),
+                    image: AssetImage(
+                      'lib/images/home_client.png',
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -38,7 +43,9 @@ class Home extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const SizedBox(height: 8,),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         Text(
                           'Discover Unrivaled\nWaterproofing Services\nwith SealTech!',
                           style: GoogleFonts.inter(
@@ -66,7 +73,9 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24,),
+              const SizedBox(
+                height: 24,
+              ),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 16),
@@ -93,24 +102,52 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(
+                height: 5,
+              ),
               const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.only(left: 6),
                 child: Row(
                   children: [
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Swimming Pool\n(8ft)', subtitle: 'Service', price: '2 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Swimming Pool\n(8ft)',
+                        subtitle: 'Service',
+                        price: '2 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Swimming Pool\n(8ft)',
+                        subtitle: 'Service',
+                        price: '2 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Swimming Pool\n(8ft)',
+                        subtitle: 'Service',
+                        price: '2 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Swimming Pool\n(8ft)',
+                        subtitle: 'Service',
+                        price: '2 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Swimming Pool\n(8ft)',
+                        subtitle: 'Service',
+                        price: '2 million LKR +'),
                   ],
                 ),
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 16),
-                child: Text('Category', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+                child: Text('Category',
+                    style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor)),
               ),
               const SizedBox(height: 10),
               Row(
@@ -120,7 +157,7 @@ class Home extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Service()),
+                        MaterialPageRoute(builder: (context) => ServicesList()),
                       );
                     },
                     child: Container(
@@ -134,7 +171,9 @@ class Home extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset('lib/images/catService.png'),
-                          const SizedBox(height: 5,),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           const Text('Services'),
                         ],
                       ),
@@ -159,7 +198,9 @@ class Home extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset('lib/images/catTools.png'),
-                          const SizedBox(height: 5,),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           const Text('Tools'),
                         ],
                       ),
@@ -184,7 +225,9 @@ class Home extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset('lib/images/catChemicals.png'),
-                          const SizedBox(height: 5,),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           const Text('Chemicals'),
                         ],
                       ),
@@ -225,31 +268,69 @@ class Home extends StatelessWidget {
                 padding: EdgeInsets.only(left: 6),
                 child: Row(
                   children: [
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Waterproofing\nSolution', subtitle: 'Product', price: '1 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Waterproofing\nSolution', subtitle: 'Product', price: '1 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Waterproofing\nSolution', subtitle: 'Product', price: '1 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Waterproofing\nSolution', subtitle: 'Product', price: '1 million LKR +'),
-                    ProductPage(imagePath: 'lib/images/pro1.png', title: 'Waterproofing\nSolution', subtitle: 'Product', price: '1 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Waterproofing\nSolution',
+                        subtitle: 'Product',
+                        price: '1 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Waterproofing\nSolution',
+                        subtitle: 'Product',
+                        price: '1 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Waterproofing\nSolution',
+                        subtitle: 'Product',
+                        price: '1 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Waterproofing\nSolution',
+                        subtitle: 'Product',
+                        price: '1 million LKR +'),
+                    ProductPage(
+                        imagePath: 'lib/images/pro1.png',
+                        title: 'Waterproofing\nSolution',
+                        subtitle: 'Product',
+                        price: '1 million LKR +'),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 16),
-                child: Text('Feedback', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+                child: Text('Feedback',
+                    style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor)),
               ),
               const SizedBox(height: 10),
               FeedbackTemplate(
                 title: 'Name',
                 additionalText: 'Feedback [comment]',
-                stars: [Icons.star, Icons.star, Icons.star, Icons.star_half,Icons.star_border],
+                stars: [
+                  Icons.star,
+                  Icons.star,
+                  Icons.star,
+                  Icons.star_half,
+                  Icons.star_border
+                ],
                 comment: 'Your comment',
               ),
-              const SizedBox(height: 16,),
+              const SizedBox(
+                height: 16,
+              ),
               FeedbackTemplate(
                 title: 'Name',
                 additionalText: 'Feedback [comment]',
-                stars: [Icons.star, Icons.star, Icons.star, Icons.star_half,Icons.star_border],
+                stars: [
+                  Icons.star,
+                  Icons.star,
+                  Icons.star,
+                  Icons.star_half,
+                  Icons.star_border
+                ],
                 comment: 'Your comment',
               )
             ],
