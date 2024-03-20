@@ -107,7 +107,7 @@ class Chemical extends StatelessWidget {
             'Chemical',
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 161, 160, 160),
             ),
           ),
           Text(
