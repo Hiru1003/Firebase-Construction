@@ -64,9 +64,8 @@ class _Profile_PageState extends State<Profile_Page> {
                       Container(
                         width: 330,
                         decoration: BoxDecoration(
-                          color: secondaryColor, // Set the color to yellow
-                          borderRadius:
-                              BorderRadius.circular(10), // Set border radius
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -76,9 +75,7 @@ class _Profile_PageState extends State<Profile_Page> {
                                 'lib/images/profile.png',
                                 height: 60,
                               ),
-                              const SizedBox(
-                                  width:
-                                      40), // Add some space between the image and texts
+                              const SizedBox(width: 40),
                               const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -122,7 +119,7 @@ class _Profile_PageState extends State<Profile_Page> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PrivacyPolicyPage()),
+                            builder: (context) => const PrivacyPolicyPage()),
                       );
                     },
                     child: Container(
@@ -164,7 +161,7 @@ class _Profile_PageState extends State<Profile_Page> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PrivacyPolicyPage()),
+                            builder: (context) => const PrivacyPolicyPage()),
                       );
                     },
                     child: Container(
@@ -302,19 +299,19 @@ class _Profile_PageState extends State<Profile_Page> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
-                        Text(
+                        const Text(
                             'Developed by undergraduate students\nfrom NSBM Green University.'),
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         GestureDetector(
@@ -329,7 +326,7 @@ class _Profile_PageState extends State<Profile_Page> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ]))));

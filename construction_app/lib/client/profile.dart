@@ -29,7 +29,11 @@ class Profile extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person, size: 100, color: primaryColor,),
+                Icon(
+                  Icons.person,
+                  size: 100,
+                  color: primaryColor,
+                ),
                 const SizedBox(height: 8.0),
                 const Text(
                   'John Doe',
@@ -57,7 +61,8 @@ class Profile extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -81,11 +86,13 @@ class Profile extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PaymentMethod()),
+                        MaterialPageRoute(
+                            builder: (context) => PaymentMethod()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -113,7 +120,8 @@ class Profile extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -141,7 +149,8 @@ class Profile extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -165,11 +174,13 @@ class Profile extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => InviteFriends()),
+                        MaterialPageRoute(
+                            builder: (context) => InviteFriends()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -197,7 +208,8 @@ class Profile extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black, backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
                       side: const BorderSide(color: Colors.black, width: 0.4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -215,53 +227,71 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AboutUs()),
                       );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.black, width: 0.4),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      side: const BorderSide(color: Colors.black, width: 0.4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
+                      minimumSize: const Size(120, 40),
                     ),
-                    elevation: 0,
-                    minimumSize: const Size(120, 40),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('About Us'),
+                        Icon(Icons.arrow_forward),
+                      ],
+                    ),
                   ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+                const SizedBox(height: 36.0),
+                Button(
+                  buttonText: 'Logout',
+                  onPressed: () {},
+                  color: 'orange',
+                  width: 380,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(
                     children: [
-                      Text('About Us'),
-                      Icon(Icons.arrow_forward),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text(
+                          'Developed by undergraduate students\nfrom NSBM Green University.'),
+                      const SizedBox(
+                        width: 70,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          launch('https://www.nsbm.ac.lk/');
+                        },
+                        child: Image.asset(
+                          'lib/images/nsbmLogo.png',
+                          width: 60,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 36.0),
-              Button(buttonText: 'Logout', onPressed: () {}, color: 'orange', width: 380,),
-              SizedBox(height: 50,),
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Row(
-                  children: [
-                    SizedBox(height: 50,),
-                    Text('Developed by undergraduate students\nfrom NSBM Green University.'),
-                    SizedBox(width: 70,),
-                    GestureDetector(
-                      onTap: () {
-                        launch('https://www.nsbm.ac.lk/');
-                      },
-                      child: Image.asset('lib/images/nsbmLogo.png', width: 60,),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              SizedBox(height: 20,),
               ],
             ),
           ),
