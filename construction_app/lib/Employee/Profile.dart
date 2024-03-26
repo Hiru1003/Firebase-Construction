@@ -283,7 +283,7 @@ class _Profile_PageState extends State<Profile_Page> {
                   ),
                   const SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Button(
                       buttonText: 'Log Out',
                       onPressed: () {
