@@ -35,7 +35,7 @@ class Category extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      width: 18,
+                      width: 12,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -100,7 +100,7 @@ class Category extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
