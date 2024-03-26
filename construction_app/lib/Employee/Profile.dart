@@ -6,6 +6,7 @@ import 'package:sealtech/components/button.dart';
 import 'package:sealtech/components/theme.dart';
 import 'package:sealtech/privacypolicy.dart';
 import 'package:sealtech/signin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile_Page extends StatefulWidget {
   const Profile_Page({
@@ -116,6 +117,48 @@ class _Profile_PageState extends State<Profile_Page> {
                     ],
                   ),
                   const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PrivacyPolicyPage()),
+                      );
+                    },
+                    child: Container(
+                      width: 310,
+                      height: 50,
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: primaryColor,
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 10),
+                              Text(
+                                'Edit My Profile',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 84, 82, 82),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Color.fromARGB(255, 84, 82, 82),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -259,6 +302,36 @@ class _Profile_PageState extends State<Profile_Page> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                            'Developed by undergraduate students\nfrom NSBM Green University.'),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launch('https://www.nsbm.ac.lk/');
+                          },
+                          child: Image.asset(
+                            'lib/images/nsbmLogo.png',
+                            width: 60,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ]))));
   }
 }
