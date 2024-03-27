@@ -228,66 +228,80 @@ class Category extends StatelessWidget {
 class ServicesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('services').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-
-        return Row(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            final data = document.data() as Map<String, dynamic>;
-            final title =
-                data['name'] ?? ''; // Retrieve title from 'name' field
-            final price = data['price'] ?? ''; // Null check for price field
-            final imageUrl = data['imageUrl'] ?? '';
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 9.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(
-                    imageUrl,
-                    height: 100,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.error);
-                    },
-                  ),
-                  const SizedBox(height: 10), // Add vertical space
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    'Service',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            );
-          }).toList(),
-        );
+    // Sample list of service data
+    final List<Map<String, dynamic>> services = [
+      {
+        'title': 'Pool Waterproofing',
+        'price': '30 000 000 LKR',
+        'imageUrl':
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS28q0T6xKshE5H8WhPFWgQi5yZf4FEwqeQWv_eOpEZQg&s',
       },
+      {
+        'title': 'Roof Waterproofing',
+        'price': '15 000 000',
+        'imageUrl':
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9ccezG8SfThcKiirh5ygLpxiX0lt925kkoG5xs49ycbqrchqviGUQz3i-vDmgrVWJuCI&usqp=CAU',
+      },
+      {
+        'title': 'Basement Sealing',
+        'price': '20 000 000 LKR',
+        'imageUrl':
+            'https://i0.wp.com/movingtips.wpengine.com/wp-content/uploads/2020/08/finished-basement.jpg?fit=1025%2C684&ssl=1',
+      },
+      {
+        'title': 'Concrete Sealing',
+        'price': '25 000 000 LKR',
+        'imageUrl':
+            'https://concrete-live.storage.googleapis.com/upload/img_cache/file-1028-4d6515ab02edbfacbd9a5c2a1547be56.jpg',
+      },
+    ];
+
+    return Row(
+      children: services.map((service) {
+        final title = service['title'] ?? '';
+        final price = service['price'] ?? '';
+        final imageUrl = service['imageUrl'] ?? '';
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 9.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                imageUrl,
+                height: 100,
+                width: 100,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error);
+                },
+              ),
+              const SizedBox(height: 10), // Add vertical space
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'Service',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                ),
+              ),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
@@ -295,67 +309,79 @@ class ServicesList extends StatelessWidget {
 class ToolsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('tools').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-
-        return Row(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            final data = document.data() as Map<String, dynamic>;
-            final title =
-                data['name'] ?? ''; // Retrieve title from 'name' field
-            final price = data['price'] ?? '';
-            final imageUrl = data['imageUrl'] ?? '';
-            // Null check for price field
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 9.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(
-                    imageUrl,
-                    height: 100,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.error);
-                    },
-                  ),
-                  const SizedBox(height: 10), // Add vertical space
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    'Tool',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            );
-          }).toList(),
-        );
+    // Sample list of tool data
+    final List<Map<String, dynamic>> tools = [
+      {
+        'title': 'Drill Machine',
+        'price': '6 500 LKR',
+        'imageUrl': 'https://m.media-amazon.com/images/I/51aUsNfO3-L.jpg',
       },
+      {
+        'title': 'Screwdriver Set',
+        'price': '11 500 LKR',
+        'imageUrl':
+            'https://m.media-amazon.com/images/I/81+jq46RN9L._AC_UF894,1000_QL80_.jpg',
+      },
+      {
+        'title': 'Circular Saw',
+        'price': '9 000 LKR',
+        'imageUrl':
+            'https://elecshop.lk/wp-content/uploads/2022/10/TS11418526.jpg',
+      },
+      {
+        'title': 'Adjustable Wrench',
+        'price': '4 500 LKR',
+        'imageUrl':
+            'https://media.wickes.co.uk/image/upload/b_rgb:FFFFFF,c_pad,dpr_1.0,f_jpg,h_1500,q_auto:good,w_1500/c_pad,h_1500,w_1500/v1/products/wickes/T3274_149054_00?pgw=1&pgwact=1',
+      },
+    ];
+
+    return Row(
+      children: tools.map((tool) {
+        final title = tool['title'] ?? '';
+        final price = tool['price'] ?? '';
+        final imageUrl = tool['imageUrl'] ?? '';
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 9.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                imageUrl,
+                height: 100,
+                width: 100,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error);
+                },
+              ),
+              const SizedBox(height: 10), // Add vertical space
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'Tool',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                ),
+              ),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
@@ -363,67 +389,76 @@ class ToolsList extends StatelessWidget {
 class ChemicalsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('chemicals').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-
-        return Row(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            final data = document.data() as Map<String, dynamic>;
-            final title =
-                data['name'] ?? ''; // Retrieve title from 'name' field
-            final price = data['price'] ?? ''; // Null check for price field
-            final imageUrl = data['imageUrl'] ??
-                ''; // Retrieve image URL from 'imageUrl' field
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 9.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(
-                    imageUrl,
-                    height: 100,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.error);
-                    },
-                  ),
-                  const SizedBox(height: 10), // Add vertical space
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    'Chemical',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            );
-          }).toList(),
-        );
+    // Sample list of chemical data
+    final List<Map<String, dynamic>> chemicals = [
+      {
+        'title': 'Chemical 1',
+        'price': '\$20',
+        'imageUrl': 'https://via.placeholder.com/150',
       },
+      {
+        'title': 'Chemical 2',
+        'price': '\$30',
+        'imageUrl': 'https://via.placeholder.com/150',
+      },
+      {
+        'title': 'Chemical 3',
+        'price': '\$25',
+        'imageUrl': 'https://via.placeholder.com/150',
+      },
+      {
+        'title': 'Chemical 4',
+        'price': '\$35',
+        'imageUrl': 'https://via.placeholder.com/150',
+      },
+    ];
+
+    return Row(
+      children: chemicals.map((chemical) {
+        final title = chemical['title'] ?? '';
+        final price = chemical['price'] ?? '';
+        final imageUrl = chemical['imageUrl'] ?? '';
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 9.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                imageUrl,
+                height: 100,
+                width: 100,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error);
+                },
+              ),
+              const SizedBox(height: 10), // Add vertical space
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'Chemical',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                ),
+              ),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
