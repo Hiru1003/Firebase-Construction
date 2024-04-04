@@ -392,24 +392,28 @@ class ChemicalsList extends StatelessWidget {
     // Sample list of chemical data
     final List<Map<String, dynamic>> chemicals = [
       {
-        'title': 'Chemical 1',
-        'price': '\$20',
-        'imageUrl': 'https://via.placeholder.com/150',
+        'title': 'Wood Protector',
+        'price': '5 000 LKR',
+        'imageUrl':
+            'https://images.thdstatic.com/productImages/2e4f063f-139b-4d8f-b02e-b89968785bd8/svn/clear-olympic-exterior-wood-stains-55260xis-54-64_1000.jpg',
       },
       {
-        'title': 'Chemical 2',
-        'price': '\$30',
-        'imageUrl': 'https://via.placeholder.com/150',
+        'title': 'Waterproof Sealant',
+        'price': '5 000 LKR',
+        'imageUrl':
+            'https://nippon.s3.ap-southeast-1.amazonaws.com/products/8329277c0df3acd0c16f2e9a7ddc0a7de409759e.jpg',
       },
       {
-        'title': 'Chemical 3',
-        'price': '\$25',
-        'imageUrl': 'https://via.placeholder.com/150',
+        'title': 'Surface Cleaner',
+        'price': '5 000 LKR',
+        'imageUrl':
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-7WM4rBEph2xKHO0gDqueOiJ7rkIL5YKBuaa511ga8g&s',
       },
       {
-        'title': 'Chemical 4',
-        'price': '\$35',
-        'imageUrl': 'https://via.placeholder.com/150',
+        'title': 'Mold Inhibitor Spray',
+        'price': '5 000 LKR',
+        'imageUrl':
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsRNGGO1WWH-cqPjiKshS1foCA8Pacrt5Ln6z7UGWoTg&s',
       },
     ];
 
@@ -488,8 +492,8 @@ class ProductPage extends StatelessWidget {
           children: [
             Image.asset(
               imagePath,
-              height: 130,
-              width: 180,
+              height: 10,
+              width: 100,
               fit: BoxFit.cover,
             ),
             Padding(
