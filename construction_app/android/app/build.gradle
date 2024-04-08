@@ -31,10 +31,6 @@ android {
     namespace "com.example.sealtech"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
-
-
-
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,8 +59,6 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }
@@ -77,8 +71,7 @@ flutter {
 
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
-    implementation platform('com.google.firebase:firebase-bom:32.7.3')
-    
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
 }
 
 

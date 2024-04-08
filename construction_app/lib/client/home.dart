@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sealtech/client/chat.dart';
@@ -306,33 +307,58 @@ class Home extends StatelessWidget {
                         color: primaryColor)),
               ),
               const SizedBox(height: 10),
-              FeedbackTemplate(
-                title: 'Name',
-                additionalText: 'Feedback [comment]',
-                stars: [
-                  Icons.star,
-                  Icons.star,
-                  Icons.star,
-                  Icons.star_half,
-                  Icons.star_border
-                ],
-                comment: 'Your comment',
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('feedback')
+                    .orderBy('timestamp',
+                        descending:
+                            true) // Order feedbacks by timestamp in descending order
+                    .limit(
+                        2) // Limit the query to fetch only the latest 2 feedbacks
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
+                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                    return Center(
+                      child: Text('No feedback available.'),
+                    );
+                  }
+
+                  return Column(
+                    children: snapshot.data!.docs.map((document) {
+                      Map<String, dynamic> data =
+                          document.data() as Map<String, dynamic>;
+
+                      return Column(
+                        children: [
+                          FeedbackTemplate(
+                            title: data['feedback'] ?? '',
+                            additionalText: 'Feedback',
+                            stars: List<IconData>.generate(
+                              data['rating'].toInt(),
+                              (index) => index < data['rating']
+                                  ? Icons.star
+                                  : Icons.star_border,
+                            ),
+                            comment: data['comment'] ?? '',
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      );
+                    }).toList(),
+                  );
+                },
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              FeedbackTemplate(
-                title: 'Name',
-                additionalText: 'Feedback [comment]',
-                stars: [
-                  Icons.star,
-                  Icons.star,
-                  Icons.star,
-                  Icons.star_half,
-                  Icons.star_border
-                ],
-                comment: 'Your comment',
-              )
             ],
           ),
         ),
